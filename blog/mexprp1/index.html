@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Blog: MEXPRP</title>
-		<link href="/index.css" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=PT+Serif|Source+Sans+Pro:600" rel="stylesheet">
-	</head>
+
+<head>
+	<title>Blog: MEXPRP</title>
+	<link href="/index.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif|Source+Sans+Pro:600" rel="stylesheet">
+</head>
+
+<body>
 	<div id="nav">
-		<ul>
-			<li><a href="/">Home</a></li>
-			<li><a href="/blog">Blog</a></li>
-			<li><a href="/projects">Projects</a></li>
-			<li><a href="/contact">Contact</a></li>
-		</ul>
+		<div class="nav-link">
+			<a href="/">Home</a>
+		</div>
+		<div class="nav-link">
+			<a href="/blog">Blog</a>
+		</div>
+		<div class="nav-link">
+			<a href="/projects">Projects</a>
+		</div>
+		<div class="nav-link">
+			<a href="/contact">Contact</a>
+		</div>
+		<div class="nav-link">
+			<a href="/about">About</a>
+		</div>
+		<div class="nav-link owner">
+			<a class="owner-link" href="/about">by IntrepidPig</a>
+		</div>
 	</div>
-	<body>
+	<div class="content">
 		<h1 id="mexprp">MEXPRP</h1>
 <p>MEXPRP is a project I have been working on for a while now. It's a math expression parser written completely in Rust. There's not much special about it, but one thing about it that is somewhat unique (for better or for worse) is that it is written almost completely from scratch. It has only two dependencies, <code>log</code> and <code>failure</code>. The only standard library features it uses outside of the prelude are some <code>fmt</code> traits, <code>sync::Once</code>, <code>cmp::PartialOrd</code>, and <code>HashMap</code>. It parses equations with a completely standalone parsing implementation. Whether or not this was a good idea, I'm not sure. The only reason I did it that way was because I couldn't figure out how any parser-combinator libraries for Rust worked. In the end, it was quite a journey that I think was well worth it.</p>
 <p>The main reason I wrote MEXPRP was for a 3D equation grapher I've been working on. Now that's not near done, so it's being saved for a future post. Of course, I could've used an existing Rust expression parser, but the only other one was a <code>0.1.0</code> library that had what I considered I somewhat strange API. Also, for some reason I've been kind of interested in keeping the dependencies down for the 3D equation grapher I was talking about. Anyway, now there's <a href="https://xkcd.com/927/">at least two</a> <code>0.x</code> Rust math expression libraries with API's that can be considered strange.</p>
@@ -135,5 +150,7 @@ parsed with, the <code>Context</code> it was parsed with (the default if it wasn
 </span><span style="background-color:#272822;color:#f8f8f2;">    </span><span style="background-color:#272822;color:#f8f8f2;">Var(</span><span style="background-color:#272822;font-style:italic;color:#66d9ef;">String</span><span style="background-color:#272822;color:#f8f8f2;">),
 </span><span style="background-color:#272822;color:#f8f8f2;">}
 </span></pre>
-	</body>
+	</div>
+</body>
+
 </html>
