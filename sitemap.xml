@@ -1,7 +1,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
         <url>
-            <loc>https://intrepidpig.github.io/about/</loc>
+            <loc>https://intrepidpig.github.io/contact/</loc>
             
         </url>
     
@@ -11,14 +11,10 @@
         </url>
     
         <url>
-            <loc>https://intrepidpig.github.io/contact/</loc>
+            <loc>https://intrepidpig.github.io/about/</loc>
             
         </url>
     
-    
-        <url>
-            <loc>https://intrepidpig.github.io/blog/</loc>
-        </url>
     
         <url>
             <loc>https://intrepidpig.github.io/</loc>
@@ -26,6 +22,10 @@
     
         <url>
             <loc>https://intrepidpig.github.io/projects/</loc>
+        </url>
+    
+        <url>
+            <loc>https://intrepidpig.github.io/blog/</loc>
         </url>
     
     
