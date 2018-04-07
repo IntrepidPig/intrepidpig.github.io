@@ -1,6 +1,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
         <url>
+            <loc>https://intrepidpig.github.io/blog/mexprp1/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://intrepidpig.github.io/about/</loc>
             
         </url>
@@ -10,14 +15,9 @@
             
         </url>
     
-        <url>
-            <loc>https://intrepidpig.github.io/blog/mexprp1/</loc>
-            
-        </url>
-    
     
         <url>
-            <loc>https://intrepidpig.github.io/</loc>
+            <loc>https://intrepidpig.github.io/projects/</loc>
         </url>
     
         <url>
@@ -25,7 +25,7 @@
         </url>
     
         <url>
-            <loc>https://intrepidpig.github.io/projects/</loc>
+            <loc>https://intrepidpig.github.io/</loc>
         </url>
     
     
