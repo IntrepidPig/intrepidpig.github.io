@@ -1,49 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/styles.css">
+        
+    <title>About Me</title>
 
-<head>
-	<title>The Pigasus</title>
-	<link href="/index.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=PT+Serif|Source+Sans+Pro:600" rel="stylesheet">
-</head>
+    </head>
+    <body>
+        <div class="main-content">
+            
+    <div class="header">
+        <h1 id="my-name">Benny Aguilera</h1>
+        <div id="my-links">
+            <span>GitHub: <a href="https://github.com/IntrepidPig">IntrepidPig</a></span>
+            <span>LinkedIn: <a href="https://www.linkedin.com/in/benny-aguilera">benny-aguilera</a></span>
+        </div>
+    </div>
+    <h2>About Me</h2>
+    <p>
+        I'm an undergraduate student currently studying Computer Science and Mathematics at UC Berkeley. My aspiration is to work in a research-type position, either at a university or in a similar role under a company, which is why I have placed an emphasis in courses relating math and computer science when choosing my coursework. This semester I'm taking Linear Algebra, Abstract Algebra, and Cryptography.
+    </p>
+    <p>
+        In my free time, I like to work on side projects, climb fake rocks, and listen to music.
+    </p>
+    <h2>Projects</h2>
+    <p>
+        <div class="container">
+            <div class="row">
+                <div class="column">
+                    <div class="project">
+                        <h3><a href="https://github.com/IntrepidPig/berlewelch">Berlekamp-Welch Error Correction</a></h3>
+                        <p>
+                            An implementation of the Berlekamp-Welch error correcting code algorithm that encodes messages as polynomials over a finite field to efficiently make them resistant to an upper bound of corruption errors. The theory of this topic was covered in my Discrete Mathematics and Probability Theory course at Berkeley, but I decided to fully implement it (and an accompanying web interface) as a side project.
+                        </p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="project">
+                        <h3><a href="https://github.com/IntrepidPig/wally">Wally Wayland Compositor</a></h3>
+                        <p>
+                            A proof of concept compositor for the Wayland protocol built using the Rust language and Vulkan 3D graphics API. Notably, all of these are relatively young technologies, so was very little literature on using them together. Building this project required me to delve into the source code of several core components of my operating system, and eventually led to me reporting a bug and suggesting a fix in my graphics driver.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <div class="project">
+                        <h3><a href="https://github.com/IntrepidPig/leaf">Leaf Programming Language</a></h3>
+                        <p>
+                            A compiler to bytecode for a self-designed programming language and an accompanying language virtual machine, both implemented in Rust. Few external libraries were used, nearly everything including parsing and code generation is written from scratch. Lexing is zero-copy and an intermediate representation in the form of a control-flow graph is partially implemented.
+                        </p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="project">
+                        <h3>Neural Network from Scratch</h3>
+                        <p>
+                            This is a simple neural network a built by following the first couple chapters of <a href="http://neuralnetworksanddeeplearning.com/chap1.html">this free online book</a>. Machine learning is an area I don't personally find so interesting, but I did enjoy this project and appreciate that I can understand the topic a little better now.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p>
 
-<body>
-	<div id="nav">
-		<div class="nav-link">
-			<a href="/">Home</a>
-		</div>
-		<div class="nav-link">
-			<a href="/blog">Blog</a>
-		</div>
-		<div class="nav-link">
-			<a href="/projects">Projects</a>
-		</div>
-		<div class="nav-link">
-			<a href="/contact">Contact</a>
-		</div>
-		<div class="nav-link">
-			<a href="/about">About</a>
-		</div>
-		<div class="nav-link owner">
-			<a class="owner-link" href="/about">by IntrepidPig</a>
-		</div>
-	</div>
-	<div class="content">
-		<h1 class="title">The
-			<span class="pigasus">Pigasus</span>
-		</h1>
-		<h2 id="navigation">Navigation</h2>
-<p>Any of the following links are available:</p>
-<ol>
-<li><a href="/blog">Blog</a></li>
-<li><a href="/projects">Projects</a></li>
-<li><a href="/contact">Contact</a></li>
-<li><a href="/about">About</a></li>
-</ol>
-<p>The most recent blog post is <a href="/blog/mexprp1">here</a></p>
-<p>Site made with <a href="https://getgutenberg.io">Gutenberg</a></p>
-
-	</div>
-</body>
-
+        </div>
+    </body>
 </html>
