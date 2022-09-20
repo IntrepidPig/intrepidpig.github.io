@@ -37,6 +37,19 @@
                         An implementation of the Berlekamp-Welch error correcting code algorithm that encodes messages as polynomials over a finite field to efficiently make them resistant to an upper bound of corruption errors. The theory of this topic was covered in my Discrete Mathematics and Probability Theory course at Berkeley, but I decided to fully implement it (and an <a href="/projects/berlewelch">accompanying web interface</a>) as a side project.
                     </p>
                 </div>
+                <div class="project">
+                    <h3><a href="https://github.com/IntrepidPig/leaf">Leaf Programming Language</a></h3>
+                    <p>
+                        A compiler to bytecode for a self-designed programming language and an accompanying language virtual machine, both implemented in Rust. Minimal external libraries were used; nearly everything including parsing and code generation is written from scratch. Lexing is zero-copy, and an intermediate representation in the form of a control-flow graph is partially implemented.
+                    </p>
+                </div>
+
+                <div class="project">
+                    <h3><a href="https://github.com/IntrepidPig/mars">Mars: Vulkan Library for Rust</a></h3>
+                    <p>
+                        A library for writing Vulkan applications in Rust with a few opinionated and experimental takes. It supports custom shaders, vertex buffers, uniform buffers, texturing, and customized render passes, and it exposes all of these through an interface that makes heavy use of traits to ensure that the resulting Vulkan API calls are valid. It does this while still being composable by using associated types to allow different (but still valid) combinations of objects into render passes.
+                    </p>
+                </div>
             </div>
             <div class="column">
                 <div class="project">
@@ -44,23 +57,20 @@
                     <p>
                         A proof of concept compositor for the Wayland protocol built using the Rust language and Vulkan 3D graphics API. Notably, all of these are relatively young technologies, so was very little literature on using them together. Building this project required me to delve into the source code of several core components of my operating system, and eventually led to me reporting a bug and suggesting a fix in my graphics driver.
                     </p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column">
-                <div class="project">
-                    <h3><a href="https://github.com/IntrepidPig/leaf">Leaf Programming Language</a></h3>
                     <p>
-                        A compiler to bytecode for a self-designed programming language and an accompanying language virtual machine, both implemented in Rust. Minimal external libraries were used, nearly everything including parsing and code generation is written from scratch. Lexing is zero-copy and an intermediate representation in the form of a control-flow graph is partially implemented.
+                        As part of this project, I completely reimplemented the Wayland protocol in Rust (<a href="https://github.com/IntrepidPig/wl">here</a>) since I wasn't satisfied with the available options. This memorably involved resorting to reading the reference implementation's C source code to discover a completely undocumented aspect of the protocol that was causing issues in my implementation at the moment.
                     </p>
                 </div>
-            </div>
-            <div class="column">
                 <div class="project">
                     <h3><a href="https://github.com/IntrepidPig/simple-neural">Neural Network from Scratch</a></h3>
                     <p>
-                        A simple neural network a built after reading the first couple chapters of <a href="http://neuralnetworksanddeeplearning.com/chap1.html">this online book</a>. This was my first time applying nontrivial amounts of calculus and linear algebra to a programming project, and it was amazing to see the result.
+                        A simple neural network built after reading the first couple chapters of <a href="http://neuralnetworksanddeeplearning.com/chap1.html">this online book</a> that can recognize handwritten digits with around 90% accuracy. This was my first time applying nontrivial amounts of calculus and linear algebra to a programming project, and it was really cool to see how effective such a small solution could be thanks to the math involved.
+                    </p>
+                </div>
+                <div class="project">
+                    <h3>Homelab</h3>
+                    <p>
+                        I maintain several Linux servers (both physical and rented) at home for some services and networking components. For example, I use a self-hosted password manager (Vaultwarden) and I set up a router from scratch on a base Linux install using firewall rules, the Unbound DNS server, and a few other services. My local and remote servers are linked on a virtual private network using wireguard. As I have built up my lab over the years, I've learned lots about Linux administration, virtualization, DNS, networking, firewalls, reverse-proxies, VPNs, backups, and lots more.
                     </p>
                 </div>
             </div>
