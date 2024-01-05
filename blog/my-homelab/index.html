@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/styles.css">
+        
+<title>Homelab Tour</title>
+
+    </head>
+    <body>
+        <div class="main-content">
+            
+
+<h1>Homelab Tour</h1>
+<p>In this post, I'll give a walkthrough of my homelab, including what hardware and sofware I have running, and the design choices I made while building it. It's kinda labgore, but that's how I like it.</p>
+<h2 id="hardware">Hardware</h2>
+<p>Let's start off with the hardware.</p>
+<ul>
+<li>ISP: Sonic.com, 1G symmetric</li>
+</ul>
+<p>I can't sing praise loud enough for Sonic. I'm eternally grateful to them for saving me from Comcast and AT&amp;T.</p>
+<ul>
+<li>HP Thin Client T730 <strong>(Farore)</strong>
+<ul>
+<li>CPU: RX-427BB (4 cores, 2.7 GHz)</li>
+<li>4GB RAM</li>
+<li>120GB SSD</li>
+<li>Intel 1G Dual NIC</li>
+</ul>
+</li>
+</ul>
+<p>I bought this new from eBay with the purpose of being a lightweight and reliable. Very happy with it.</p>
+<ul>
+<li>Old gaming PC frankenstein <strong>(Hyrule)</strong>
+<ul>
+<li>AMD FX-6300 (6 cores, 4GHz)</li>
+<li>24GB RAM (DDR3 oof)</li>
+<li>Nvidia GTX 960</li>
+<li>120GB internal SSD</li>
+<li>1TB external SSD</li>
+</ul>
+</li>
+</ul>
+<p>This is a combination of parts from old gaming PCs. It's very power hungry so ideally I'll suspend it when I'm not using it, although this precludes me from hosting anything where uptime is important on it.</p>
+<ul>
+<li>Netgear GS108Ev3 <strong>(Mido)</strong>
+<ul>
+<li>8 port managed switch</li>
+</ul>
+</li>
+</ul>
+<p>A user on /r/homelab kindly sent me this for free many years ago after I posted a question about buying a similar one. I'm extremely grateful for that, because this switch is still the backbone of my lab today, and enabled me to learn so much.</p>
+<h2 id="software">Software</h2>
+<p>The running theme in my lab is to do everything the hard way. I eschew high-level tools for managing systems for low-level fundamental utilities. For example, NetworkManager, Proxmox, and OPNSense are out. Custom python init scripts, libvirt, and nftables are in (respectively). This approach has pros and cons.</p>
+<p>Pros:</p>
+<ul>
+<li>Flexibility to configure your system however you want</li>
+<li>High-level tools have their own learning curve, and yet they don't completely unrequire you from understanding their low-level backend either. So might as well just learn the low-level backend thoroughly and reap the flexibility that comes with it.</li>
+<li>Lots of learning experiences</li>
+<li>You can put your configuration and tools in git</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>More difficult (although you could possibly argue it's less difficult in some sense)</li>
+<li>No nice web interface to make quick changes</li>
+<li>Not very battle tested (possible bugs, security issues)</li>
+</ul>
+<p>That was all very abstract and vague. Let's make it a little more concrete.</p>
+<p>The magic of my network all happens in my little HP T730 box, &quot;Farore&quot;, which is working as a router and a host for high uptime services. It's a plain archlinux install with a bunch of custom configuration to turn it into a router. It started several years ago by following <a href="https://arstechnica.com/gadgets/2016/04/the-ars-guide-to-building-a-linux-router-from-scratch/">this Ars guide</a>, but it has since evolved into something a little cooler (more bespoke). Here are some of the features I've added.</p>
+<h3 id="nftables">nftables</h3>
+<p>I switched from iptables as in the guide to nftables. An nftables config file is surprisingly pleasant to read and write (compared to the hellscape that is iptables). It's so good that I use it on every one of my systems except those that use docker, because docker creates iptables rules which interact with nftables rules in ways I don't understand yet.</p>
+<p>nftrace is an extremely useful tool for debugging firewall issues.</p>
+<h3 id="vlans">VLANs</h3>
+<p>I recently added VLANs that isolate my home network from my home<em>lab</em> network. Before VLANs, they were either not isolated, or the homelab network was in a double NAT behind Farore and then an ISP router.</p>
+<h3 id="vpns-and-rule-based-routing-madness">VPNs and rule-based routing madness</h3>
+<p>I wanted to proxy everything in the home network behind Mullvad VPN, but it was surprisingly tricky. It was made difficult by two confounding factors: (1) I only wanted traffic from the home VLAN to go through the VPN, not traffic from the homelab VLAN, and (2) I was confused by how NAT interacts with the VPN.</p>
+<p>The wireguard website recommends network namespaces as the modern solution for forcing traffic through the VPN, but I found that to be heavy handed and tedious. Instead, I used rule based routing to send everything from the home VLAN through the wireguard interface, but let everything else go through the WAN interface directly as normal.</p>
+<h3 id="dns">DNS</h3>
+<p>I have two dnsmasq instances running, one for the home network and one for the homelab network, each one doing both DNS and DHCP.</p>
+<h3 id="port-forwarding-x-reverse-proxy">Port-forwarding ❌ Reverse-proxy ✔️</h3>
+<p>At some point I realized that I don't even need to port forward anymore. All of my services are either running directly on Farore, the machine with the WAN uplink, or are HTTP-based and thus can be forwarded by running a reverse proxy on the </p>
+<h3 id="ssl">SSL</h3>
+<p>I have certbot renewing wildcard certificates for both *.pigasus.net and *.&lt;local-prefix&gt;.pigasus.net where I use the local prefix to point to services that are only available locally. The local DNS records also only exist in the homelab dnsmasq instance. As I mentioned before, all HTTP/HTTPS traffic is routed through the reverse proxy running on my router, which handles SSL termination.</p>
+<h3 id="software-repos">Software repos</h3>
+<p>Farore hosts a docker registry and an arch package repository. I use the docker registry to host applications I've written or customized myself, and I use the arch repository to distribute tools that are useful for systems in the homelab.</p>
+<h3 id="management-helpers">Management helpers</h3>
+<p>Since I mess with my router so much, a lot of times I screw something up and lose SSH access to it. The ultimate backup is the keyboard and monitor I have in the closet with my network equipment. But I also set up a cool thing where I assigned the MAC address of a USB to ethernet adapter to an ip address in both the homelab and home domains. So if I bring my laptop over to the network closet, and plug it into a VLAN port for the home or homelab, it will automatically get an IP address that corresponds to the respective network segment. This lets me easily get on the hylia network with a device that's convenient to work on even when there's no way to access it through the home network.</p>
+<h3 id="infrastructure-as-code">Infrastructure as code</h3>
+<p>This is still a goal of mine. But across like 5 different linux hosts (virtual and physical) I've made so many small configuration file changes and it really bothers me that I have no good way to track what I've changed. I'm currently gradually working through maintaining all configuration in a git repo in the root directory of each system, and symlinking config files from their actual location to this repo, but this is a little tedious, and it's easy to forget to do it.</p>
+<p>Another idea is to do some overlay filesystem tricks or something similar. I believe SteamOS does something like this. But this sounds complicated and doesn't solve the change tracking problem like putting config in git would.</p>
+<p>I like the idea of a functionally pure operating system, where the state of the system is completely determined by a central configuration source that can be kept in version control. I haven't looked deeply into nixOS, but I think it might be intended to be a solution in this domain.</p>
+<h3 id="ssh-notifications">SSH notifications</h3>
+<p>I get a notification to my phone whenever an SSH login is successfully made to Farore.</p>
+<h3 id="services">Services</h3>
+<p>Here's a list of services I run. (I know, it's absurdly small compared to how much effort I've put into the infrastructure running them.)</p>
+<p>User-facing: Vaultwarden, Seafile, Jellyfin</p>
+<p>Internal: ntfy, Nginx Proxy Manager, docker registry, arch repo</p>
+<p>(Actually vaultwarden is on a DigitalOcean droplet right now, but I'm gonna move it back on-prem as soon as I can).</p>
+<h3 id="farore-network-interface-map">Farore network interface map</h3>
+<img src="/assets/Farore interfaces.drawio.svg">
+
+
+        </div>
+    </body>
+</html>

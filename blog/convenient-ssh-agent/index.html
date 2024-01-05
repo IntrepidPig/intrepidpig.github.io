@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/styles.css">
+        
+<title>How To Setup a Convenient SSH Agent</title>
+
+    </head>
+    <body>
+        <div class="main-content">
+            
+
+<h1>How To Setup a Convenient SSH Agent</h1>
+<h2 id="motivation">Motivation</h2>
+<p>(Feel free to skip this section)</p>
+<p>If you don't use a full desktop environment, you might have configured an SSH agent in your <code>.bashrc</code> that makes connecting to some hosts more convenient. In my case I installed <code>keychain</code>, which served it's purpose, but at the small inconvenience of me having to type in a password twice every time I turn on my PC: once to login, and once to unlock my SSH key.</p>
+<p>These pain points tugged at me for a while. Why do I have to authenticate myself again to unlock my SSH key if I just authenticated myself as much as could be reasonably desired only moments ago? Can't we link these authentication actions together so that logging in is enough to unlock the SSH key as well? It seemed vaguely possible to me with some complicated PAM magic, but thankfully GNOME Keychain has not only already done all of that PAM magic for us, but provides a keyring management interface, a clean GUI password prompt, and an SSH agent implementation. I admit that I feel a bit humbled for eschewing the desktop environment to go my own way, only to come crawling back to the componenents that a desktop environment would have graciously provided without me even asking. But I digress.</p>
+<p>Another problem the method I describe here solves is that of providing SSH agent environment variables to all graphical programs, not just terminal ones. In older X11 graphical environments, this wasn't a problem because they would be started by a bash shell which reads <code>.bashrc</code>. But with the coming of Wayland, this is no longer the case, so we need another way to set environment variables for all programs. This should allow me to start <code>virt-manager</code> and the like from the normal application launcher instead of the terminal.</p>
+<h2 id="setup">Setup</h2>
+<h3 id="packages">Packages</h3>
+<p>Install <code>gnome-keyring</code> (the daemon) and <code>seahorse</code> (the GUI).</p>
+<h3 id="gnome-keyring-daemon">Gnome Keyring Daemon</h3>
+<p><code>systemctl --user enable --now gnome-keyring-daemon.service</code></p>
+<h3 id="environment-variables">Environment Variables</h3>
+<p>There are a number of ways to set environment variables for the entire graphical session, but I found using systemd's new <code>environment.d</code> feature to be the most straightforward and well-supported way of doing so.</p>
+<p>Create the file <code>~/.config/environment.d/50-ssh-auth-sock-gcr.conf</code> with the following contents:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
+</span></code></pre>
+<h3 id="keyrings">Keyrings</h3>
+<p>This is the part I'm still fuzzy on. As far as I can tell, there is no documented or supported way of manually creating keyrings in Seahorse that contain SSH keys and are unlocked on login. Instead you just have to attempt to use an SSH key, and when it prompts for the password, check a box that says &quot;Unlock this key at login&quot;. But there's actually another step that needs to happen, which is that a keyring needs to be created to store the key, and what makes it funky is that only one if these things can happen per login attempt. So this is the flow I suggest.</p>
+<ol>
+<li>Try to SSH with your key. Enter the password for the key and check the box saying you want to unlock this key at login. It will then ask you to create a keyring to store the key in (this is the Default Keyring), for which you should choose whatever password you like.</li>
+<li>Reboot (this might be unnecessary, but it at least ensures the keyring daemon is in a fresh and consistent state)</li>
+<li>Try to SSH with your key. It will ask you to unlock the Default Keyring. Enter the password you created before and check the box saying you would like to unlock this keyring at login.</li>
+</ol>
+<p>Now there should be two keyrings. The &quot;Default Keyring&quot;, which has your SSH key inside of it. And the &quot;Login&quot; keyring, which has the password to the &quot;Default Keyring&quot; and will unlock that upon login.</p>
+
+
+
+        </div>
+    </body>
+</html>

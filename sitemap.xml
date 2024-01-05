@@ -3,4 +3,15 @@
     <url>
         <loc>https://about.pigasus.net/</loc>
     </url>
+    <url>
+        <loc>https://about.pigasus.net/blog/</loc>
+    </url>
+    <url>
+        <loc>https://about.pigasus.net/blog/convenient-ssh-agent/</loc>
+        <lastmod>2023-09-11</lastmod>
+    </url>
+    <url>
+        <loc>https://about.pigasus.net/blog/my-homelab/</loc>
+        <lastmod>2024-01-04</lastmod>
+    </url>
 </urlset>
